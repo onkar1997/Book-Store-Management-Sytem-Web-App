@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="container" style="background-color: #fff; margin-top:5%; border-radius: 20px; padding: 50px 30px;">
+    <h1 class="display-4" style="font-weight: 400;">bookstore.com</h1>
+    <p class="lead">One stop solution you need to keep track of inventory you have on every book.</p>
+    <hr class="my-4">
+    <p style="font-size: 1.1em;" class="mb-5">Create your own store and add books and keep a track of it. A user-friendly web app for you to reduce your stress of
+    keeping manually track of inventory to a computerized way on <strong>free</strong> online portal bookstore.com</p>
+    <p class="lead">
+      <a href="{% url 'home' %}" class="btn btn-success btn-lg mb-2" role="button">Get Started</a>
+      {% if user.is_authenticated %}
+      <a href="{% url 'add_store' %}" class="btn btn-primary btn-lg mb-2" role="button">Add Store</a>
+      {% endif %}
+    </p>
+  </div>
+
+{% endblock %}

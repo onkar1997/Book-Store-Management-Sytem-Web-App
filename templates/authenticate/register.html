@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container form-container-log-reg my-5 pb-3">
+    {% include 'includes/messages.html' %}
+    <h3 class="text-center mb-3">Register</h3>
+    <hr>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <div class="mb-5">
+            <label for="confirm_password" class="form-label">Repeat Password</label>
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+        </div>
+
+        <button type="submit" name="submit" class="btn btn-primary w-100 mb-2">Submit</button>
+
+        <small>
+            <a href="{% url 'login' %}">Already have an account ? Login here</a>
+        </small>
+    </form>
+</div>
+
+{% endblock %}

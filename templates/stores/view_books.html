@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        {% include 'includes/messages.html' %}
+        
+        {% if store_list %}
+            {% for store in store_list %}
+                <h3 class="text-center text-dark mt-5">{{ store.store_name }}</h3>
+                <hr>
+                {% if user.is_authenticated %}
+                    {% if user.id == store.user.id %}
+                        <a href="{% url 'add_book_page' store.id %}" class="btn btn-primary mb-2">Add Book</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        <div class="card mt-3" style="width: 70rem;">
+            <div class="card-body">
+
+                {% if book_list %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Cover</th>
+                                <th scope="col">Book</th>
+                                <th scope="col">Author</th>
+                                <th scope="col">Publisher</th>
+                                <th scope="col">No. Of Copies</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for book in book_list %}
+                                <tr>
+                                    <td><img src="{{ book.book_image.url }}" alt="book_image" width="50" height="50" style="border-radius:10%;"></td>
+                                    <td>{{ book.book_name }}</td>
+                                    <td>{{ book.author_name }}</td>
+                                    <td>{{ book.publisher_name }}</td>
+                                    <td>{{ book.num_of_copies }}</td>
+                                    <td>
+                                        <a href="{% url 'edit_book' book.store_id book.id %}" class="btn btn-primary btn-sm">Edit</a>
+                                        <a href="{% url 'delete_book' book.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <div class="container text-center">
+                        <a href="{% url 'home' %}" class="btn btn-secondary">Go Back</a>
+                    </div>
+                {% else %}
+                    <div class="container text-center">
+                        <h1 class="text-danger mt-5 mb-5">! ! ! No books available ! ! !</h1>
+                        <a href="{% url 'home' %}" class="btn btn-dark text-center mb-5">Go Back</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

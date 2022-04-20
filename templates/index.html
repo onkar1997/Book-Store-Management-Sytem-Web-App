@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+    {% load static %}
+    {% block content %}
+
+      <!-- Show Store -->
+        <div class="container">
+            {% include 'includes/messages.html' %}
+
+            <div class="card mt-5" style="width: 70rem;">
+                <div class="card-body">
+                        
+                            {% if store_list %}
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'add_store' %}" class="btn btn-primary mb-2">Add Store</a>
+                                {% else %}
+                                    <a href="{% url 'login' %}" class="btn btn-primary mb-2">Add Store</a>
+                                {% endif %}
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">Store</th>
+                                            <th scope="col">Address</th>
+                                            <th scope="col">Owner</th>
+                                            <th scope="col">Action</th>
+                                            <th scope="col">Book</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for store in store_list reversed %}
+                                            <tr>
+                                                <td><img src="{{ store.store_image.url }}" alt="Store Image" style="width:40px; height:40px; border-radius:10%;"></td>
+                                                <td>{{ store.store_name }}</td>
+                                                <td>{{ store.address|truncatewords:1 }}</td>
+                                                <td>{{ store.owner_name }}</td>
+
+                                                {% if user.is_authenticated %}
+                                                    {% if user.id == store.user.id %}
+                                                        <td> 
+                                                            <button class="btn btn-primary btn-sm"> 
+                                                                <a href="{% url 'edit_store' store.id %}" class="text-white">Edit</a> 
+                                                            </button> 
+                                                                
+                                                            <button class="btn btn-danger btn-sm"> 
+                                                                <a href="{% url 'delete_store' store.id %}" class="text-white">Delete</a> 
+                                                            </button> </td>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{% url 'view_books' store.id %}" class="btn btn-success btn-sm">View Books</a>
+                                                        </td>
+                                                    {% else %}
+                                                        <td>
+                                                            <button class="btn btn-primary btn-sm" disabled>
+                                                                <a href="{% url 'edit_store' store.id %}" class="text-white">Edit</a>
+                                                            </button>
+                                                            
+                                                            <button class="btn btn-danger btn-sm" disabled>
+                                                                <a href="{% url 'delete_store' store.id %}" class="text-white">Delete</a>
+                                                            </button>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{% url 'view_books' store.id %}" class="btn btn-success btn-sm">View Books</a>
+                                                        </td>
+                                                    {% endif %}
+                                                {% else %}
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm" disabled>
+                                                            <a href="{% url 'edit_store' store.id %}" class="text-white">Edit</a>
+                                                        </button>
+                                                    
+                                                        <button class="btn btn-danger btn-sm" disabled>
+                                                            <a href="{% url 'delete_store' store.id %}" class="text-white">Delete</a>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-success btn-sm" disabled>View Books</button>
+                                                    </td>
+                                                {% endif %}
+                                                
+                                                
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <a href="{% url 'add_store' %}" class="btn btn-primary mb-2">Add Store</a>
+                                <h1 class="text-danger text-center mt-5 mb-5">! ! ! No stores available ! ! !</h1>
+                            {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+    {% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        
+        <!-- Add Book Form -->
+        <div class="container form-container mt-5">
+            {% for s in store %}
+                <a href="{% url 'go_back' s.id %}" class="btn btn-secondary">Go Back</a>
+            {% endfor %}
+
+            <h2 class="text-center pb-3">Add Book</h2>
+            <hr>
+            {% for s in store %}
+            <form class="row g-3 needs-validation" action="{% url 'add_book' s.id %}" method="POST" enctype="multipart/form-data">
+            {% endfor %}
+
+                {% csrf_token %}
+                    <div class="col-12">
+                    <label for="book_name" class="form-label">Book Name</label>
+                    <input type="text" class="form-control" id="book_name" name="book_name" required>
+                </div>
+                <div class="col-12">
+                    <label for="author_name" class="form-label">Author Name</label>
+                    <input type="text" class="form-control" id="author_name" name="author_name" required>
+                </div>
+                <div class="col-12">
+                    <label for="publisher_name" class="form-label">Publisher Name</label>
+                    <input type="text" class="form-control" id="publisher_name" name="publisher_name" required>
+                </div>
+                <div class="col-12">
+                    <label for="num_of_copies" class="form-label">Number Of Copies</label>
+                    <input type="number" class="form-control" id="num_of_copies" name="num_of_copies" required>
+                </div>
+                <div class="col-12">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price" name="price" required>
+                </div>
+                <div class="col-12">
+                    <label for="book_image" class="form-control">Upload Book Image</label>
+                    <input type="file" name="book_image" id="book_image" required>
+                </div>
+                <div class="col-12 d-grid gap-2 my-4">
+                    <button class="btn btn-primary" type="submit" name="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+
+{%  endblock %}

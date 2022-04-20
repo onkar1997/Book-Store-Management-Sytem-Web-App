@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        
+        <!-- Edit Store Form -->
+        <div class="container form-container mt-5">
+            <a href="{% url 'home' %}" class="btn btn-secondary">Go Back</a>
+            {% include 'includes/messages.html' %}
+
+            <h2 class="text-center pb-3">Edit Store</h2>
+            <hr>
+            {% if store %}
+            <form class="row g-3 needs-validation" action="{% url 'update_store' store.id  %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="col-12">
+                    <label for="name" class="form-label">Store Name</label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ store.store_name }}" required>
+                </div>
+                <div class="col-12">
+                    <label for="owner_name" class="form-label">Owner Name</label>
+                    <input type="text" class="form-control" id="owner_name" name="owner_name" value="{{ store.owner_name }}" required>
+                </div>
+                <div class="col-12">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea  class="form-control" name="address" id="address" cols="30" rows="10" required>{{ store.address }}</textarea>
+                </div>
+                <div class="col-12">
+                    <label for="store_image" class="form-control">Upload Store Image</label>
+                    <small class="text-danger">Note : You need to upload the image again !</small>
+                    <br>
+                    <input type="file" name="store_image" id="store_image" required>
+                </div>
+                <div class="col-12 d-grid gap-2 my-4">
+                    <button class="btn btn-primary" type="submit" name="submit">Submit</button>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+
+{%  endblock %}

@@ -1,0 +1,9 @@
+{% for message in messages %}
+    <div class="container alert {{message.tags}} mt-2" id="msg" role="alert">
+        {{message}} 
+        <button type="button" class="btn-close cancel" aria-label="Close" onclick="hideAlertMessage()"
+            style="position:absolute; right:0; padding-right:20px; cursor:pointer; font-weight:bold;">
+        </button>
+    </div>
+{% endfor %}
+
